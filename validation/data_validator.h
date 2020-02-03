@@ -56,14 +56,14 @@ public:
 	 *
 	 * @param val		Item to put
 	 */
-	void put(uint64_t timestamp, float val, uint64_t error_count, int priority);
+	void put(uint64_t timestamp, float val, uint64_t error_count, uint8_t priority);
 
 	/**
 	 * Put a 3D item into the validator.
 	 *
 	 * @param val		Item to put
 	 */
-	void put(uint64_t timestamp, const float val[dimensions], uint64_t error_count, int priority);
+	void put(uint64_t timestamp, const float val[dimensions], uint64_t error_count, uint8_t priority);
 
 	/**
 	 * Get the next sibling in the group
@@ -126,12 +126,6 @@ public:
 	float *rms() { return _rms; }
 
 	/**
-	 * Get the vibration offset
-	 * @return		the stored vibration offset
-	 */
-	float *vibration_offset() { return _vibe; }
-
-	/**
 	 * Print the validator value
 	 *
 	 */
@@ -186,7 +180,6 @@ private:
 	float _M2[dimensions]{};    /**< RMS component value */
 	float _rms[dimensions]{};   /**< root mean square error */
 	float _value[dimensions]{}; /**< last value */
-	float _vibe[dimensions]{};  /**< vibration level, in sensor unit */
 
 	unsigned _value_equal_count{0}; /**< equal values in a row */
 	unsigned _value_equal_count_threshold{

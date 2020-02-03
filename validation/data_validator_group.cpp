@@ -113,7 +113,7 @@ void DataValidatorGroup::set_equal_value_threshold(uint32_t threshold) {
 }
 
 void DataValidatorGroup::put(unsigned index, uint64_t timestamp, const float val[3], uint64_t error_count,
-			     int priority) {
+			     uint8_t priority) {
 
 	DataValidator *next = _first;
 	unsigned i = 0;
@@ -212,52 +212,6 @@ float *DataValidatorGroup::get_best(uint64_t timestamp, int *index) {
 
 	*index = max_index;
 	return (best) ? best->value() : nullptr;
-}
-
-float DataValidatorGroup::get_vibration_factor(uint64_t timestamp) {
-
-	DataValidator *next = _first;
-
-	float vibe = 0.0f;
-
-	/* find the best RMS value of a non-timed out sensor */
-	while (next != nullptr) {
-		if (next->confidence(timestamp) > 0.5f) {
-			float *rms = next->rms();
-
-			for (unsigned j = 0; j < 3; j++) {
-				if (rms[j] > vibe) {
-					vibe = rms[j];
-				}
-			}
-		}
-
-		next = next->sibling();
-	}
-
-	return vibe;
-}
-
-float DataValidatorGroup::get_vibration_offset(uint64_t timestamp, int axis) {
-
-	DataValidator *next = _first;
-
-	float vibe = -1.0f;
-
-	/* find the best vibration value of a non-timed out sensor */
-	while (next != nullptr) {
-		if (next->confidence(timestamp) > 0.5f) {
-			float *vibration_offset = next->vibration_offset();
-
-			if (vibe < 0.0f || vibration_offset[axis] < vibe) {
-				vibe = vibration_offset[axis];
-			}
-		}
-
-		next = next->sibling();
-	}
-
-	return vibe;
 }
 
 void DataValidatorGroup::print() {

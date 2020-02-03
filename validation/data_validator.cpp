@@ -43,12 +43,12 @@
 
 #include <ecl.h>
 
-void DataValidator::put(uint64_t timestamp, float val, uint64_t error_count_in, int priority_in) {
+void DataValidator::put(uint64_t timestamp, float val, uint64_t error_count_in, uint8_t priority_in) {
 	float data[dimensions] = {val};  // sets the first value and all others to 0
 	put(timestamp, data, error_count_in, priority_in);
 }
 
-void DataValidator::put(uint64_t timestamp, const float val[dimensions], uint64_t error_count_in, int priority_in) {
+void DataValidator::put(uint64_t timestamp, const float val[dimensions], uint64_t error_count_in, uint8_t priority_in) {
 
 	_event_count++;
 
@@ -83,8 +83,6 @@ void DataValidator::put(uint64_t timestamp, const float val[dimensions], uint64_
 				_value_equal_count = 0;
 			}
 		}
-
-		_vibe[i] = _vibe[i] * 0.99f + 0.01f * fabsf(val[i] - _lp[i]);
 
 		// XXX replace with better filter, make it auto-tune to update rate
 		_lp[i] = _lp[i] * 0.99f + 0.01f * val[i];

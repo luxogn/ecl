@@ -66,7 +66,7 @@ public:
 	 * @param error_count	The current error count of the sensor
 	 * @param priority	The priority of the sensor
 	 */
-	void put(unsigned index, uint64_t timestamp, const float val[3], uint64_t error_count, int priority);
+	void put(unsigned index, uint64_t timestamp, const float val[3], uint64_t error_count, uint8_t priority);
 
 	/**
 	 * Get the best data triplet of the group
@@ -74,20 +74,6 @@ public:
 	 * @return		pointer to the array of best values
 	 */
 	float *get_best(uint64_t timestamp, int *index);
-
-	/**
-	 * Get the RMS / vibration factor
-	 *
-	 * @return		float value representing the RMS, which a valid indicator for vibration
-	 */
-	float get_vibration_factor(uint64_t timestamp);
-
-	/**
-	 * Get the vibration offset in the sensor unit
-	 *
-	 * @return		float value representing the vibration offset
-	 */
-	float get_vibration_offset(uint64_t timestamp, int axis);
 
 	/**
 	 * Get the number of failover events
